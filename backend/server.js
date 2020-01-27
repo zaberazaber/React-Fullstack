@@ -4,20 +4,38 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const app = express();
+app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
+app.use(bodyParser.json()); // parse form data client
+app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
+app.set('view engine', 'ejs'); // configure template engine
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(fileUpload()); // configure fileupload
 
 // const {getHomePage} = require('./routes/index');
 // const {addPlayerPage, addPlayer, deletePlayer, editPlayer, editPlayerPage} = require('./routes/player');
-const port = 5000;
+app.set(port =  5000); // set express to use this port
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
 const db = mysql.createConnection ({
     host: 'localhost',
     user: 'root',
-    password: 'password',
-    database: 'learn',
+    password: 'Mysql#123',
+    database: 'learning',
     // insecureAuth : true
 });
+
+app.get('/login', (req, res, next) =>{
+    res.status(200).json({
+        message: 'get API is working'
+    })
+})
+
+app.post('/login', (req, res, next) =>{
+    res.status(200).json({
+        message: 'post API is working'
+    })
+})
 
 // connect to database
 db.connect((err) => {
@@ -29,13 +47,9 @@ db.connect((err) => {
 global.db = db;
 
 // configure middleware
-app.set('port', process.env.port || port); // set express to use this port
-app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
-app.set('view engine', 'ejs'); // configure template engine
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json()); // parse form data client
-app.use(express.static(path.join(__dirname, 'public'))); // configure express to use public folder
-app.use(fileUpload()); // configure fileupload
+
+
+
 
 // routes for the app
 /*
@@ -49,12 +63,13 @@ app.post('/edit/:id', editPlayer);
 
 // set the app to listen on the port
 app.listen(port, () => {
-    console.log(`Server running on port: ${port}`);
-});
+    console.log("Server running on port 5000")
+})
 
 
-app.post('/submit-form', (req, res) => {
-    const username = req.body.username
-    //...
-    res.end()
-  })
+
+// app.post('/submit-form', (req, res) => {
+//     const username = req.body.username
+//     //...
+//     res.end()
+//   })
