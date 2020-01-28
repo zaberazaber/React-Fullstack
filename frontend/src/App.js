@@ -30,18 +30,37 @@ class App extends React.Component{
 //     this.setState({resume: event.target.value});
 //  }
 
- handleSubmit(event) {
-  console.log('A name was submitted: ' ,this.state);
-  event.preventDefault();
-}
+fetchFirst(url) {
+  var that = this;
+  if (url) {
+   fetch("localhost:5000/products", {method: "POST",body: this.state}).then(function(response){ console.log(response.json());});
+    }
+}  
 
-axios({
-  url: '/submit-form:5000',
-  method: 'post',
-  data: {
-    name: 'faisal',
-  }
-})
+ handleSubmit(event) {
+  //console.log('A name was submitted: ' ,this.state);
+  //event.preventDefault();
+
+//  var myInit = { method: 'POST',headers: {},body: this.state};
+
+  
+  
+ // componentWillMount(){
+
+      this.fetchFirst("reactjs");
+
+  //}  
+
+
+
+// .then(function(jsonResponse) {
+//   //Success message
+//  console.log(jsonResponse);
+// }).catch(error){
+//  console.log(error);
+// });
+
+}
 
  
   render(){
