@@ -34,10 +34,22 @@ const port = process.env.PORT || 5000;
 const db = mysql.createConnection ({
     host: 'localhost',
     user: 'root',
-    password: 'password',
-    database: 'learn',
+    password: 'Mysql#123',
+    database: 'learning',
     // insecureAuth : true
 });
+
+app.get('/login', (req, res, next) =>{
+    res.status(200).json({
+        message: 'get API is working'
+    })
+})
+
+app.post('/login', (req, res, next) =>{
+    res.status(200).json({
+        message: 'post API is working'
+    })
+})
 
 // connect to database
 db.connect((err) => {
